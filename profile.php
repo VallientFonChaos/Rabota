@@ -3,7 +3,7 @@
 $name = $_POST['name'];
 $login = $_POST['login'];
 $password = $_POST['password'];
-$json = file_get_contents('connect/datebase.json');    
+$json = file_get_contents('connect/JSON/datebase.json');    
 $array = json_decode($json,TRUE);                                           
 
 if ($_SESSION['messageNumber']){
@@ -29,3 +29,5 @@ unset($_SESSION['messageNumber']);
         </form>
     </body>
 </html>
+
+

@@ -1,11 +1,8 @@
 <?php
    session_start();
-    $users = file_get_contents("datebase.json");
-$json_dec = json_decode($users, true);
-
 $login = $_POST['login'];
 $password = $_POST['password'];
-$json = file_get_contents('datebase.json');    
+$json = file_get_contents('JSON/datebase.json');    
 $array = json_decode($json,TRUE);                                           
 
 /*if ($login === '' ) {

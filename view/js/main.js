@@ -28,6 +28,9 @@ $('.login-btn').click(function (e) {
         return;
     }
 
+function hasWhiteSpace(s) {
+  return s.indexOf(' ') >= 0;
+}
 
     $.ajax({
         url: 'connect/loginConnect.php',
@@ -68,16 +71,8 @@ $('.register-btn').click(function (e) {
     const isPasswordEmpty = password === ''; 
     const isNameEmpty = name === '';
     const isEmailEmpty = email === ''; 
-    const isPasswordConfirmEmpty = passwordConfirm === ''; 
-
-
-    let formData = new FormData();
-
-    formData.append('name', name);
-    formData.append('login', login);
-    formData.append('password', password);
-    formData.append('passwordConfirm', passwordConfirm);
-    formData.append('email', email);
+    const isPasswordConfirmEmpty = passwordConfirm === '';
+    var z = false;
 
     if (isNameEmpty) {
         $('.msgname').text('Поле Name не должно быть пустым');
@@ -109,28 +104,104 @@ $('.register-btn').click(function (e) {
         $('.msgemail').text('');
     }
 
+
+
+
+
     if (isLoginEmpty || isPasswordEmpty || isNameEmpty || isEmailEmpty || isPasswordConfirmEmpty) {
         return;
     }
+
+    console.log(name);
+
+    for (var i = 0, n = name.length; i < n; i++) {
+        if (name.charCodeAt(i) >= 65 && name.charCodeAt(i) <= 90 || name.charCodeAt(i) >= 97 && name.charCodeAt(i) <= 122 || name.charCodeAt(i) == 32) { 
+            $('.msgname').text('');
+        } else {
+                $('.msgname').text('Поле с именем должно состоять из латинских букв');
+                }
+        }
+
+    for (var i = 0, n = login.length; i < n; i++) {
+        if (login.charCodeAt(i) >= 65 && login.charCodeAt(i) <= 90 || login.charCodeAt(i) >= 97 && login.charCodeAt(i) <= 122 || login.charCodeAt(i) >= 48 && login.charCodeAt(i) <= 57) { 
+            $('.msglog').text('');
+        } else {
+                $('.msglog').text('Поле с логином не должно иметь пробелов');
+                }
+        }
+    for (var i = 0, n = password.length; i < n; i++) {
+        if (password.charCodeAt(i) >= 65 && password.charCodeAt(i) <= 90 || password.charCodeAt(i) >= 97 && password.charCodeAt(i) <= 122 || password.charCodeAt(i) >= 48 && password.charCodeAt(i) <= 57) { 
+            $('.msgpas').text('');
+        } else {
+                $('.msgpas').text('Поле с паролем должно иметь не мение 6 символов');
+                }
+        }
+    for (var i = 0, n = passwordConfirm.length; i < n; i++) {
+        if (passwordConfirm.charCodeAt(i) >= 65 && passwordConfirm.charCodeAt(i) <= 90 || passwordConfirm.charCodeAt(i) >= 97 && passwordConfirm.charCodeAt(i) <= 122 || passwordConfirm.charCodeAt(i) >= 48 && passwordConfirm.charCodeAt(i) <= 57) { 
+            $('.msgCpas').text('');
+        } else {
+                $('.msgCpas').text('Поле с подтверждением пароля должно иметь не мение 6 символов');
+                }
+        }
+
+
+
+    for (var i = 0, n = email.length; i < n; i++) {
+        if (email.charCodeAt(i) >= 64 && email.charCodeAt(i) <= 90 || email.charCodeAt(i) >= 97 && email.charCodeAt(i) <= 122 || email.charCodeAt(i) >= 48 && email.charCodeAt(i) <= 57 || email.charCodeAt(i) == 46 || email.charCodeAt(i) == 45) { 
+            $('.msgemail').text('');
+        } else {
+                $('.msgemail').text('Не правильно введен Email');
+                } 
+                if (email.charCodeAt(i) == 64) {
+                   z = true; 
+                }
+        }
+
+        if (z == false) {
+            $('.msgemail').text('Не правильно введен Email');
+        }
+
+        if (name.length < 2) {
+            $('.msgname').text('Поле с именем должно иметь не мение 2 букв');
+        }
+
+        if (login.length < 6) {
+            $('.msglog').text('Поле с логином должно иметь не мение 6 символов');
+        }
+
+        if (password.length < 6) {
+            $('.msgpas').text('Поле с паролем должно иметь не мение 6 символов');
+        }
+
+        if (password == passwordConfirm) {
+
+        } else {
+            $('.msg').text('Пароли не совпадают');
+        }
+
+
+
+function hasWhiteSpace(s) {
+  return s.indexOf(' ') >= 0;
+}
 
     $.ajax({
         url: 'connect/registerConnect.php',
         type: 'POST',
         dataType: 'json',
-        processData: false,
-        contentType: false,
-        cache: false,
-        data: formData,
+        data: {
+            name: name,
+            login: login,
+            password: password,
+            passwordConfirm: passwordConfirm,
+            email: email
+        },
         success (data) {
-
             if (data.status) {
                 document.location.href = '/login.php';
             } else {
                 $('.msg').removeClass('none').text(data.message);
-
             }
-
         }
     });
-
 });

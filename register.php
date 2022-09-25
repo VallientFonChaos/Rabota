@@ -4,6 +4,9 @@ session_start();
 
 <!doctype html>
 <html lang="en">
+<head>
+    <script defer src="/view/js/jquery-3.6.1.min.js"></script>
+    <script defer src="/view/js/main.js"></script>
     <meta charset="UTF-8">
     <title>Регистрация</title>
     <link rel="stylesheet" href="view/css/main.css">
@@ -11,7 +14,7 @@ session_start();
     <body>
         <form action="connect/registerConnect.php" method="post">
             <label>Name</label>                
-             <p class="msg">
+             <p class="msgname">
                     <?php 
                         if ($_SESSION['messageName']){
                             echo '<p class="msg">'. $_SESSION['messageName'].'</p>';
@@ -21,7 +24,7 @@ session_start();
                 </p>
             <input type="text" name="name" placeholder="Введите свое полное имя">  <br/>
             <label>Login</label>
-            <p class="msg">
+            <p class="msglog">
                     <?php 
                         if ($_SESSION['messageLogin']){
                             echo '<p class="msg">'. $_SESSION['messageLogin'].'</p>';
@@ -31,7 +34,7 @@ session_start();
                 </p>
             <input type="text" name="login" placeholder="Введите свой логин"> <br/>
             <label>Password</label>
-                         <p class="msg">
+                         <p class="msgpas">
                     <?php 
                         if ($_SESSION['messagePassword']){
                             echo '<p class="msg">'. $_SESSION['messagePassword'].'</p>';
@@ -41,7 +44,7 @@ session_start();
                 </p>
             <input type="password" name="password" placeholder="Введите свой пароль"> <br/>
             <label>Confirm Password</label>
-             <p class="msg">
+             <p class="msgCpas">
                     <?php 
                         if ($_SESSION['messagePasswordConfirm']){
                             echo '<p class="msg">'. $_SESSION['messagePasswordConfirm'].'</p>';
@@ -51,7 +54,7 @@ session_start();
                 </p>
             <input type="password" name="passwordConfirm" placeholder="Подтвердите свой пароль"> <br/>
             <label>Email</label>
-                         <p class="msg">
+                         <p class="msgemail">
                     <?php 
                         if ($_SESSION['messageEmail']){
                             echo '<p class="msg">'. $_SESSION['messageEmail'].'</p>';
